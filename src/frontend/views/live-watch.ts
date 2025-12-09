@@ -493,6 +493,15 @@ export class LiveWatchWebviewProvider implements vscode.WebviewViewProvider {
             case 'inline-set-value':
                 this.handleInlineSetValue(message.nodeId, message.newValue);
                 break;
+            case 'add-expression':
+                this.addWatchExpr(message.expression, LiveWatchWebviewProvider.session);
+                break;
+        }
+    }
+
+    public triggerAddExpression() {
+        if (this.webviewView) {
+            this.webviewView.webview.postMessage({ type: 'add-expression' });
         }
     }
 

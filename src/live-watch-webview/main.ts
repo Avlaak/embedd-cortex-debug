@@ -23,7 +23,7 @@ interface VariableNode {
 }
 
 interface LiveWatchMessage {
-    type: 'update' | 'clear' | 'hint';
+    type: 'update' | 'clear' | 'hint' | 'add-expression';
     variables?: VariableNode[];
     hintText?: string;
     hasSession?: boolean;
@@ -77,6 +77,9 @@ class LiveWatchView {
             case 'hint':
                 this.renderHint(message.hintText || '');
                 break;
+            case 'add-expression':
+                this.showAddExpressionInput();
+                break;
         }
     }
 
@@ -107,6 +110,86 @@ class LiveWatchView {
         hintDiv.className = 'hint-message';
         hintDiv.textContent = text;
         this.root.appendChild(hintDiv);
+    }
+
+    private showAddExpressionInput() {
+        // Check if already showing
+        let inputContainer = this.root.querySelector('.add-expression-container') as HTMLElement;
+        if (inputContainer) {
+            const input = inputContainer.querySelector('input');
+            if (input) {
+                input.focus();
+            }
+            return;
+        }
+
+        // Create container
+        inputContainer = document.createElement('div');
+        inputContainer.className = 'tree-item add-expression-container';
+        
+        // Toggle placeholder (invisible)
+        const toggle = document.createElement('span');
+        toggle.className = 'tree-toggle no-children';
+        inputContainer.appendChild(toggle);
+
+        // Content
+        const content = document.createElement('div');
+        content.className = 'tree-item-content';
+        
+        const input = document.createElement('input');
+        input.type = 'text';
+        input.className = 'inline-edit-input';
+        input.placeholder = 'Expression to watch';
+        input.style.width = '100%';
+        
+        content.appendChild(input);
+        inputContainer.appendChild(content);
+        
+        this.root.appendChild(inputContainer);
+        
+        input.focus();
+        
+        // Event listeners
+        const commit = () => {
+            const value = input.value.trim();
+            if (value) {
+                this.vscode.postMessage({ type: 'add-expression', expression: value });
+            }
+            cleanup();
+        };
+        
+        const cleanup = () => {
+            if (inputContainer && inputContainer.parentNode) {
+                inputContainer.parentNode.removeChild(inputContainer);
+            }
+            if (this.editingNodeId === 'add-expression') {
+                this.editingNodeId = null;
+                this.render();
+            }
+        };
+        
+        input.addEventListener('keydown', (e) => {
+            if (e.key === 'Enter') {
+                e.preventDefault();
+                e.stopPropagation();
+                commit();
+            } else if (e.key === 'Escape') {
+                e.preventDefault();
+                e.stopPropagation();
+                cleanup();
+            }
+        });
+        
+        input.addEventListener('blur', () => {
+            // Commit on blur if there is a value
+            const value = input.value.trim();
+            if (value) {
+                this.vscode.postMessage({ type: 'add-expression', expression: value });
+            }
+            cleanup();
+        });
+        
+        this.editingNodeId = 'add-expression';
     }
 
     private renderNode(node: VariableNode, parent: HTMLElement) {

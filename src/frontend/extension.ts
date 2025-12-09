@@ -855,15 +855,7 @@ export class CortexDebugExtension {
     }
 
     private addLiveWatchExpr() {
-        vscode.window.showInputBox({
-            placeHolder: 'Enter a valid C/gdb expression. Must be a global variable expression',
-            ignoreFocusOut: true,
-            prompt: 'Enter Live Watch Expression'
-        }).then((v) => {
-            if (v) {
-                this.liveWatchProvider.addWatchExpr(v, vscode.debug.activeDebugSession);
-            }
-        });
+        this.liveWatchProvider.triggerAddExpression();
     }
 
     private addToLiveWatch(arg: any) {
