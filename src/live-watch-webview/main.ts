@@ -307,14 +307,6 @@ class LiveWatchView {
             const actions = document.createElement('div');
             actions.className = 'tree-item-actions';
 
-            // Set value button
-            if (this.hasSession) {
-                actions.appendChild(this.createActionButton('set-value', node.id, 'Set Value', this.getSetValueIcon()));
-            }
-
-            // Edit button
-            actions.appendChild(this.createActionButton('edit', node.id, 'Edit expression', this.getEditIcon()));
-
             // Move up button
             actions.appendChild(this.createActionButton('move-up', node.id, 'Move expression up', this.getArrowUpIcon()));
 
@@ -324,12 +316,6 @@ class LiveWatchView {
             // Remove button
             actions.appendChild(this.createActionButton('remove', node.id, 'Remove expression', this.getCloseIcon()));
 
-            item.appendChild(actions);
-        } else if (this.hasSession) {
-            // Set value button for non-root nodes
-            const actions = document.createElement('div');
-            actions.className = 'tree-item-actions';
-            actions.appendChild(this.createActionButton('set-value', node.id, 'Set Value', this.getSetValueIcon()));
             item.appendChild(actions);
         }
 
@@ -556,20 +542,12 @@ class LiveWatchView {
             '-.707-.708L8 7.293 4.354 3.646l-.707.708L7.293 8l-3.646 3.646.707.708L8 8.707z"/></svg>';
     }
 
-    private getEditIcon(): string {
-        return '<svg viewBox="0 0 16 16"><path d="M13.23 1h-1.46L3.52 9.25l-.16.22L1 13.59 2.41 15l4.12-2.36.22-.16L15 4.23V2.77L13.23 1zM2.41 13.59l1.51-3 1.45 1.45-2.96 1.55zm3.83-2.06L4.47 9.76l8-8 1.77 1.77-8 8z"/></svg>';
-    }
-
     private getArrowUpIcon(): string {
         return '<svg viewBox="0 0 16 16"><path d="M3.5 7.5L8 3l4.5 4.5H9v5H7v-5H3.5z"/></svg>';
     }
 
     private getArrowDownIcon(): string {
         return '<svg viewBox="0 0 16 16"><path d="M12.5 8.5L8 13 3.5 8.5H7v-5h2v5h3.5z"/></svg>';
-    }
-
-    private getSetValueIcon(): string {
-        return '<svg viewBox="0 0 16 16"><path d="M4 6h8v1H4V6zm0 3h8v1H4V9zm0 3h5v1H4v-1z"/></svg>';
     }
 }
 
