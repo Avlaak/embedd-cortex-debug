@@ -77,15 +77,21 @@
             text-overflow: ellipsis;
             white-space: nowrap;
             flex: 1;
+            display: flex;
+            align-items: center;
         }
         .tree-label .name {
             color: var(--vscode-symbolIcon-variableForeground, var(--vscode-foreground));
+            flex-shrink: 0;
         }
         .tree-label .separator {
             color: var(--vscode-descriptionForeground);
+            flex-shrink: 0;
         }
         .tree-label .value {
             color: var(--vscode-debugTokenExpression-value, var(--vscode-foreground));
+            overflow: hidden;
+            text-overflow: ellipsis;
         }
         .tree-label .value.changed {
             background-color: var(--vscode-diffEditor-insertedTextBackground, rgba(155, 185, 85, 0.2));
@@ -146,8 +152,8 @@
             font-size: var(--vscode-font-size);
             padding: 1px 4px;
             outline: none;
-            width: 100%;
             min-width: 100px;
+            flex: 1;
         }
         .inline-edit-input:focus {
             border-color: var(--vscode-focusBorder);
@@ -156,6 +162,13 @@
             cursor: text;
         }
         .tree-label .name.editable:hover {
+            text-decoration: underline;
+            text-decoration-style: dotted;
+        }
+        .tree-label .value.editable {
+            cursor: text;
+        }
+        .tree-label .value.editable:hover {
             text-decoration: underline;
             text-decoration-style: dotted;
         }

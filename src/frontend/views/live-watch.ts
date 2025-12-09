@@ -490,7 +490,35 @@ export class LiveWatchWebviewProvider implements vscode.WebviewViewProvider {
             case 'inline-rename':
                 this.handleInlineRename(message.nodeId, message.newName);
                 break;
+            case 'inline-set-value':
+                this.handleInlineSetValue(message.nodeId, message.newValue);
+                break;
         }
+    }
+
+    private handleInlineSetValue(nodeId: string, newValue: string) {
+        if (!LiveWatchWebviewProvider.session) {
+            vscode.window.showWarningMessage('Live Watch: No active debug session');
+            this.updateWebview();
+            return;
+        }
+
+        const node = this.variables.findById(nodeId);
+        if (!node) {
+            this.updateWebview();
+            return;
+        }
+
+        const args = {
+            expression: node.getExpr(),
+            value: newValue
+        };
+        LiveWatchWebviewProvider.session.customRequest('liveSetValue', args).then(() => {
+            this.refresh(LiveWatchWebviewProvider.session);
+        }, (err) => {
+            vscode.window.showErrorMessage(`Live Watch: Failed to set value: ${err}`);
+            this.updateWebview();
+        });
     }
 
     private handleInlineRename(nodeId: string, newName: string) {

@@ -185,6 +185,16 @@ class LiveWatchView {
                 valueSpan.classList.add('changed');
             }
         }
+
+        // Inline value editing when session is active (only for leaf nodes)
+        if (this.hasSession && node.value && node.value !== '' && !node.hasChildren) {
+            valueSpan.classList.add('editable');
+            valueSpan.addEventListener('dblclick', (e) => {
+                e.stopPropagation();
+                this.startInlineValueEdit(node, valueSpan);
+            });
+        }
+
         label.appendChild(valueSpan);
 
         // Set tooltip
@@ -355,6 +365,75 @@ class LiveWatchView {
                     type: 'inline-rename',
                     nodeId: node.id,
                     newName: newValue
+                });
+            } else {
+                // Re-render to apply any updates that were skipped during editing
+                this.render();
+            }
+        };
+
+        input.addEventListener('blur', () => {
+            finishEdit(true);
+        });
+
+        input.addEventListener('keydown', (e) => {
+            if (e.key === 'Enter') {
+                e.preventDefault();
+                finishEdit(true);
+            } else if (e.key === 'Escape') {
+                e.preventDefault();
+                finishEdit(false);
+            }
+        });
+    }
+
+    private startInlineValueEdit(node: VariableNode, valueSpan: HTMLElement) {
+        if (this.editingNodeId) {
+            return; // Already editing
+        }
+
+        this.editingNodeId = node.id;
+
+        const currentValue = node.value;
+        const input = document.createElement('input');
+        input.type = 'text';
+        input.className = 'inline-edit-input';
+        input.value = currentValue;
+
+        const parent = valueSpan.parentElement;
+        if (!parent) {
+            return;
+        }
+
+        // Hide the value span temporarily
+        valueSpan.style.display = 'none';
+
+        parent.insertBefore(input, valueSpan);
+        input.focus();
+        input.select();
+
+        const finishEdit = (save: boolean) => {
+            if (this.editingNodeId !== node.id) {
+                return; // Already finished
+            }
+
+            this.editingNodeId = null;
+            const newValue = input.value.trim();
+
+            // Restore visibility
+            valueSpan.style.display = '';
+
+            // Remove input
+            if (input.parentElement) {
+                input.parentElement.removeChild(input);
+            }
+
+            // Save if changed
+            if (save && newValue !== currentValue) {
+                this.vscode.postMessage({
+                    type: 'inline-set-value',
+                    nodeId: node.id,
+                    newValue: newValue
                 });
             } else {
                 // Re-render to apply any updates that were skipped during editing
