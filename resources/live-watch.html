@@ -89,12 +89,26 @@
             flex-shrink: 0;
             padding: 0 4px;
         }
+        .tree-label .value-container {
+            flex: 1;
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            cursor: default;
+            min-height: 100%;
+        }
+        .tree-label .value-container.editable {
+            cursor: text;
+        }
+        .tree-label .value-container.editable:hover .value {
+            text-decoration: underline;
+            text-decoration-style: dotted;
+        }
         .tree-label .value {
             color: var(--vscode-debugTokenExpression-value, var(--vscode-foreground));
             overflow: hidden;
             text-overflow: ellipsis;
-            flex: 1;
-            cursor: default;
+            white-space: nowrap;
         }
         .tree-label .value.string {
             color: var(--vscode-debugTokenExpression-string, #ce9178);
@@ -177,13 +191,6 @@
             cursor: text;
         }
         .tree-label .name.editable:hover {
-            text-decoration: underline;
-            text-decoration-style: dotted;
-        }
-        .tree-label .value.editable {
-            cursor: text;
-        }
-        .tree-label .value.editable:hover {
             text-decoration: underline;
             text-decoration-style: dotted;
         }

@@ -358,6 +358,10 @@ class LiveWatchView {
         separator.textContent = '=';
         label.appendChild(separator);
 
+        // Value container for full-width double-click area
+        const valueContainer = document.createElement('div');
+        valueContainer.className = 'value-container';
+
         const valueSpan = document.createElement('span');
         valueSpan.className = 'value';
         if (!node.value || node.value === '') {
@@ -381,16 +385,31 @@ class LiveWatchView {
             }
         }
 
-        // Inline value editing when session is active (only for leaf nodes)
-        if (this.hasSession && node.value && node.value !== '' && !node.hasChildren) {
+        // Store references for event handling
+        const canEditValue = this.hasSession && node.value && node.value !== '' && !node.hasChildren;
+        if (canEditValue) {
             valueSpan.classList.add('editable');
-            valueSpan.addEventListener('dblclick', (e) => {
-                e.stopPropagation();
-                this.startInlineValueEdit(node, valueSpan);
-            });
+            valueContainer.classList.add('editable');
         }
 
-        label.appendChild(valueSpan);
+        valueContainer.appendChild(valueSpan);
+        label.appendChild(valueContainer);
+
+        // Handle double-click on the entire value area (including empty space after value text)
+        if (canEditValue) {
+            // We attach to the item level for reliable event capture
+            const valueEditHandler = (e: MouseEvent) => {
+                const containerRect = valueContainer.getBoundingClientRect();
+                // Check if click X position is within the value container area
+                if (e.clientX >= containerRect.left) {
+                    e.stopPropagation();
+                    e.preventDefault();
+                    this.startInlineValueEdit(node, valueSpan);
+                }
+            };
+            // Store handler reference on the container for later attachment
+            (valueContainer as any)._dblclickHandler = valueEditHandler;
+        }
 
         // Set tooltip
         let tooltip = node.type || '';
@@ -430,6 +449,15 @@ class LiveWatchView {
         });
 
         item.addEventListener('dblclick', (e) => {
+            // Check if we have a value edit handler and click is in value area
+            const handler = (valueContainer as any)._dblclickHandler;
+            if (handler) {
+                handler(e);
+                // If handler was called, event is already handled
+                if (e.defaultPrevented) {
+                    return;
+                }
+            }
             // Only toggle for non-root nodes with children
             // Root nodes use inline edit on name double-click
             if (!node.isRoot && node.hasChildren) {
