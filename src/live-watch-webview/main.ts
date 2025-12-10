@@ -387,7 +387,11 @@ class LiveWatchView {
         }
 
         // Store references for event handling
-        const canEditValue = this.hasSession && node.value && node.value !== '' && !node.hasChildren;
+        // Allow editing values for:
+        // - Non-root nodes (children of variables)
+        // - Root nodes that are simple variables (not computed expressions)
+        const isEditableRoot = node.isRoot && this.isSimpleVariable(node.expr);
+        const canEditValue = this.hasSession && node.value && node.value !== '' && !node.hasChildren && (!node.isRoot || isEditableRoot);
         if (canEditValue) {
             valueSpan.classList.add('editable');
             valueContainer.classList.add('editable');
@@ -683,6 +687,65 @@ class LiveWatchView {
 
     private getArrowDownIcon(): string {
         return '<svg viewBox="0 0 16 16"><path d="M12.5 8.5L8 13 3.5 8.5H7v-5h2v5h3.5z"/></svg>';
+    }
+
+    /**
+     * Check if expression is a simple variable (lvalue) that can be assigned to.
+     * Simple variables: identifiers, struct members (a.b, a->b), array elements (a[0]),
+     * pointer dereferences (*ptr), and variables with format specifiers (var,x).
+     * Non-assignable: arithmetic expressions (a+b), function calls, literals, etc.
+     */
+    private isSimpleVariable(expr: string): boolean {
+        // Remove format specifier if present (e.g., ",x" or ",h" at the end)
+        const exprWithoutFormat = expr.replace(/,[hxbod]$/i, '').trim();
+        
+        if (!exprWithoutFormat) {
+            return false;
+        }
+
+        // Check for operators that indicate a computed expression
+        // Arithmetic: + - * / % (but not pointer dereference *ptr or member ->)
+        // Comparison: == != < > <= >=
+        // Logical: && || !
+        // Bitwise: & | ^ ~ << >>
+        // Assignment: =
+        // Ternary: ? :
+        
+        // Patterns that indicate non-lvalue expressions:
+        // - Binary arithmetic: contains + - / % not at start, or contains * not at start and not followed by identifier
+        // - Comparisons and logical ops
+        // - Function calls: identifier followed by (
+        // - Literals: pure numbers, strings
+        
+        // Simple check: if it contains these operators (excluding unary * and struct ->), it's likely an expression
+        const binaryOpPattern = /[+\-\/%](?![>])|[=!<>]=|&&|\|\||<<|>>|\^|~|\?|:/;
+        if (binaryOpPattern.test(exprWithoutFormat)) {
+            // Check if it's just a negative number or pointer arithmetic
+            // Allow: -5, *ptr, ptr->member, arr[i]
+            // Disallow: a+b, a-b (where a and b are identifiers)
+            const hasArithmeticBetweenIdentifiers = /[a-zA-Z_]\w*\s*[+\-\*\/%]\s*[a-zA-Z_0-9]/.test(exprWithoutFormat);
+            if (hasArithmeticBetweenIdentifiers) {
+                return false;
+            }
+        }
+        
+        // Check for function calls: identifier followed by (
+        if (/[a-zA-Z_]\w*\s*\(/.test(exprWithoutFormat)) {
+            return false;
+        }
+        
+        // Check for pure numeric literals (not lvalues)
+        if (/^-?\d+(\.\d+)?$/.test(exprWithoutFormat) || /^0x[0-9a-fA-F]+$/i.test(exprWithoutFormat)) {
+            return false;
+        }
+        
+        // Check for string literals
+        if (/^["']/.test(exprWithoutFormat)) {
+            return false;
+        }
+        
+        // Otherwise, assume it's a valid lvalue (variable, member access, array element, etc.)
+        return true;
     }
 }
 
