@@ -3202,7 +3202,7 @@
         "url": "https://github.com/avlaak/cortex-debug/issues"
     },
     "scripts": {
-        "vscode:prepublish": "webpack --mode production && node dist/docgen.js && npm ci -C binary_modules --omit dev && node -e \"require('fs').cpSync('binary_modules/node_modules', 'dist/node_modules', {recursive: true})\"",
+        "vscode:prepublish": "webpack --mode production && node dist/docgen.js && npm ci -C binary_modules --omit dev && node -e \"require('fs').cpSync('binary_modules/node_modules', 'dist/node_modules', {recursive: true, verbatimSymlinks: true})\"",
         "watch": "webpack --mode development --watch",
         "compile": "webpack --mode development && node dist/docgen.js",
         "test-compile": "tsc -p ./",
