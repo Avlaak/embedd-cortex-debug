@@ -1,0 +1,83 @@
+name: Create Release
+
+on:
+  workflow_dispatch:
+
+env:
+  VERSION: ''
+  IS_PRERELEASE: 'false'
+  PACKAGE_NAME: 'CortexDebug'
+  VSIX_NAME: 'cortex-debug'
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Get version from package.json
+        id: get_version
+        run: |
+          VERSION=$(node -p "require('./package.json').version")
+          echo "VERSION=$VERSION" >> $GITHUB_ENV
+
+      - name: Print version
+        run: echo ${{ env.VERSION }}
+
+      - name: Change prerelease status
+        if: contains(env.VERSION, '-rc')
+        run: echo "IS_PRERELEASE=true" >> $GITHUB_ENV
+
+      - name: Print prerelease status
+        run: echo ${{ env.IS_PRERELEASE }}
+
+      - name: Install package creator
+        run: npm install -g @vscode/vsce
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Build extension
+        run: vsce package
+
+      - name: Read changelog for pre release build
+        id: changelog_release
+        uses: embedd-actions/read_changelog_action@v3
+        with:
+          changelogfile: 'CHANGELOG.md'
+          tag: ${{ env.VERSION }}
+
+      - name: Prepare release notes
+        env:
+          REL_CHANGES: ${{ steps.changelog_release.outputs.content }}
+        run: |
+          echo "## [${{ env.VERSION }}] - $(date +'%Y-%m-%d')" >> Release_Notes.md
+          echo "" >> Release_Notes.md
+          echo "## Changes:" >> Release_Notes.md
+          echo "$REL_CHANGES" >> Release_Notes.md
+
+
+      - uses: ncipollo/release-action@v1
+        with:
+          bodyFile: "Release_Notes.md"
+          allowUpdates: false
+          prerelease: ${{ env.IS_PRERELEASE }}
+          tag: "v${{ env.VERSION }}"
+          commit: ${{ github.ref_name }}
+
+
+      - name: Upload vsix to release
+        uses: svenstaro/upload-release-action@v2
+        with:
+          repo_token: ${{ secrets.GITHUB_TOKEN }}
+          file: ${{ env.VSIX_NAME }}-${{ env.VERSION }}.vsix
+          asset_name: ${{env.PACKAGE_NAME}}-${{ env.VERSION }}.vsix
+          tag: "v${{ env.VERSION }}"
+
+      - name: Publish extension to marketplace
+        if: env.IS_PRERELEASE == 'false'
+        run: npm run deploy
+        env:
+          VSCE_PAT: ${{ secrets.VSCE_PAT }}
+
