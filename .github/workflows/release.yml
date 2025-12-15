@@ -6,8 +6,8 @@ on:
 env:
   VERSION: ''
   IS_PRERELEASE: 'false'
-  PACKAGE_NAME: 'CortexDebug'
-  VSIX_NAME: 'cortex-debug'
+  PACKAGE_NAME: 'EmbeddedCortexDebug'
+  VSIX_NAME: 'embedded-cortex-debug'
 
 jobs:
   release:
@@ -54,7 +54,6 @@ jobs:
         run: |
           echo "## [${{ env.VERSION }}] - $(date +'%Y-%m-%d')" >> Release_Notes.md
           echo "" >> Release_Notes.md
-          echo "## Changes:" >> Release_Notes.md
           echo "$REL_CHANGES" >> Release_Notes.md
 
 

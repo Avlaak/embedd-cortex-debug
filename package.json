@@ -3173,7 +3173,6 @@
         "webpack": "^5.97.1",
         "webpack-cli": "^6.0.1"
     },
-    "displayName": "Cortex-Debug",
     "engines": {
         "vscode": "^1.69.0"
     },
@@ -3191,7 +3190,8 @@
         "mcu-debug.peripheral-viewer"
     ],
     "main": "./dist/extension.js",
-    "name": "cortex-debug",
+    "name": "embedded-cortex-debug",
+    "displayName": "Embedded Cortex-Debug",
     "publisher": "embeddteam",
     "license": "MIT",
     "repository": {
