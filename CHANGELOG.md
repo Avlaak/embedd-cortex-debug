@@ -1,5 +1,14 @@
 # ChangeLog
 
+# V1.14.0
+* Added ability to edit variables in live-watch
+* Added inline editing of variable names in live-watch
+* Added inline editing of variable values in live-watch
+* Added context menu for format selection in live-watch
+* Styling unified with original watch
+* Live-watch rewritten to webview
+* Make publish script cross-platform by replacing cp with Node.js fs.cpSync
+
 # V1.13.0-pre9
 * Fix for https://github.com/Marus/cortex-debug/issues/1167 Race comdition in parallel reading of multiple symbol files
 

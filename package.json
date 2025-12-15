@@ -1,5 +1,5 @@
 {
-    "version": "1.13.0-pre8",
+    "version": "1.14.0",
     "preview": false,
     "activationEvents": [
         "onDebugResolve:cortex-debug",
@@ -3156,7 +3156,7 @@
         "uuid": "^11.0.5",
         "vscode-jsonrpc": "^8.2.1"
     },
-    "description": "ARM Cortex-M GDB Debugger support for VSCode",
+    "description": "ARM Cortex-M GDB Debugger support for VSCode - Fork of marus25/cortex-debug with additional features...",
     "devDependencies": {
         "@stylistic/eslint-plugin": "^2.13.0",
         "@types/mocha": "^10.0.10",
@@ -3192,14 +3192,14 @@
     ],
     "main": "./dist/extension.js",
     "name": "cortex-debug",
-    "publisher": "marus25",
+    "publisher": "embeddteam",
     "license": "MIT",
     "repository": {
         "type": "git",
-        "url": "https://github.com/Marus/cortex-debug.git"
+        "url": "https://github.com/avlaak/cortex-debug.git"
     },
     "bugs": {
-        "url": "https://github.com/Marus/cortex-debug/issues"
+        "url": "https://github.com/avlaak/cortex-debug/issues"
     },
     "scripts": {
         "vscode:prepublish": "npm run lint && webpack --mode production && node dist/docgen.js && npm ci -C binary_modules --omit dev && node -e \"require('fs').cpSync('binary_modules/node_modules', 'dist/node_modules', {recursive: true})\"",
