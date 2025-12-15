@@ -3208,6 +3208,7 @@
         "test-compile": "tsc -p ./",
         "package": "node ./release.js --package",
         "publish": "node ./release.js --publish --vsx-also",
-        "lint": "eslint ."
+        "lint": "eslint .",
+        "deploy": "vsce publish"
     }
 }
