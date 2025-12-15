@@ -5,7 +5,7 @@ import globals from 'globals';
 
 export default tseslint.config(
     {
-        ignores: ['out/', 'dist/', 'src/live-watch-webview/', 'node_modules/', 'binary_modules/', '.vscode-test/'],
+        ignores: ['out/', 'dist/', 'node_modules/', 'binary_modules/', '.vscode-test/'],
     },
     eslint.configs.recommended,
     tseslint.configs.recommendedTypeChecked,

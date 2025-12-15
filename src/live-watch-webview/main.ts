@@ -93,7 +93,7 @@ class LiveWatchView {
             { label: 'Default', format: '' }
         ];
 
-        formats.forEach(f => {
+        formats.forEach((f) => {
             const item = document.createElement('div');
             item.className = 'context-menu-item';
 
@@ -140,7 +140,7 @@ class LiveWatchView {
         const message = event.data;
 
         switch (message.type) {
-            case 'update':
+            case 'update': {
                 const oldVariables = this.variables;
                 this.variables = message.variables || [];
                 this.hasSession = message.hasSession ?? false;
@@ -157,6 +157,7 @@ class LiveWatchView {
                     }
                 }
                 break;
+            }
             case 'clear':
                 this.variables = [];
                 this.hasSession = false;
@@ -215,12 +216,12 @@ class LiveWatchView {
                 const newNode = newNodes[i];
 
                 // Check key structural properties
-                if (oldNode.id !== newNode.id ||
-                    oldNode.name !== newNode.name ||
-                    oldNode.expr !== newNode.expr ||
-                    oldNode.hasChildren !== newNode.hasChildren ||
-                    oldNode.expanded !== newNode.expanded ||
-                    oldNode.depth !== newNode.depth) {
+                if (oldNode.id !== newNode.id
+                    || oldNode.name !== newNode.name
+                    || oldNode.expr !== newNode.expr
+                    || oldNode.hasChildren !== newNode.hasChildren
+                    || oldNode.expanded !== newNode.expanded
+                    || oldNode.depth !== newNode.depth) {
                     return true;
                 }
 
@@ -255,7 +256,7 @@ class LiveWatchView {
         // Recursively update values in DOM
         const updateValuesInDOM = (container: HTMLElement) => {
             const items = container.querySelectorAll('.tree-item-container');
-            items.forEach(item => {
+            items.forEach((item) => {
                 const id = item.getAttribute('data-id');
                 if (id && newValueMap.has(id)) {
                     const newNode = newValueMap.get(id)!;
@@ -273,7 +274,7 @@ class LiveWatchView {
                             }
 
                             // Add type-specific classes
-                            if (newNode.value.startsWith('"') || newNode.value.startsWith("'")) {
+                            if (newNode.value.startsWith('"') || newNode.value.startsWith('\'')) {
                                 valueElement.classList.add('string');
                             } else if (newNode.value === 'true' || newNode.value === 'false') {
                                 valueElement.classList.add('boolean');
@@ -489,7 +490,7 @@ class LiveWatchView {
             }
 
             // Add type classes
-            if (node.value.startsWith('"') || node.value.startsWith("'")) {
+            if (node.value.startsWith('"') || node.value.startsWith('\'')) {
                 valueSpan.classList.add('string');
             } else if (node.value === 'true' || node.value === 'false') {
                 valueSpan.classList.add('boolean');
@@ -859,8 +860,8 @@ class LiveWatchView {
 
     // SVG Icons
     private getCloseIcon(): string {
-        return '<svg viewBox="0 0 16 16"><path d="M8 8.707l3.646 3.647.708-.707L8.707 8l3.647-3.646' +
-            '-.707-.708L8 7.293 4.354 3.646l-.707.708L7.293 8l-3.646 3.646.707.708L8 8.707z"/></svg>';
+        return '<svg viewBox="0 0 16 16"><path d="M8 8.707l3.646 3.647.708-.707L8.707 8l3.647-3.646'
+            + '-.707-.708L8 7.293 4.354 3.646l-.707.708L7.293 8l-3.646 3.646.707.708L8 8.707z"/></svg>';
     }
 
     private getArrowUpIcon(): string {
