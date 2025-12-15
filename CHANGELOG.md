@@ -1,13 +1,19 @@
-# ChangeLog
+# Changelog
 
-## [1.14.1]
+## [1.14.1] – 2025‑12‑15
+
+### Fixed
 * Fix extension launch.
 
-## [1.14.0]
+## [1.14.0] – 2025‑12‑15
+
+### Added
 * Added ability to edit variables in live-watch.
 * Added inline editing of variable names in live-watch.
 * Added inline editing of variable values in live-watch.
 * Added context menu for format selection in live-watch.
+
+### Changed
 * Styling unified with original watch.
 * Live-watch rewritten to webview.
 * Make publish script cross-platform by replacing cp with Node.js fs.cpSync.
