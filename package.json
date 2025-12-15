@@ -12,7 +12,7 @@
         "configuration": [
             {
                 "type": "object",
-                "title": "Debugger",
+                "title": "Embedded Cortex-Debug",
                 "properties": {
                     "cortex-debug.variableUseNaturalFormat": {
                         "type": "boolean",
