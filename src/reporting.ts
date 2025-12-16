@@ -7,7 +7,7 @@ import { ConfigurationArguments } from './common';
 
 import { v4 as uuidv4 } from 'uuid';
 
-const extension = vscode.extensions.getExtension('embeddteam.embedded-cortex-debug');
+const extension = vscode.extensions.getExtension('embedd-team.embedd-cortex-debug');
 const extensionId = extension.id;
 const extensionVersion = extension.packageJSON.version;
 const trackingId = 'UA-113901869-1';

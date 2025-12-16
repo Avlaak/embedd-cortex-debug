@@ -6,8 +6,8 @@ on:
 env:
   VERSION: ''
   IS_PRERELEASE: 'false'
-  PACKAGE_NAME: 'EmbeddedCortexDebug'
-  VSIX_NAME: 'embedded-cortex-debug'
+  PACKAGE_NAME: 'EmbeddCortexDebug'
+  VSIX_NAME: 'embedd-cortex-debug'
 
 jobs:
   release:

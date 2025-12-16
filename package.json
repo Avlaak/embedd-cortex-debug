@@ -12,7 +12,7 @@
         "configuration": [
             {
                 "type": "object",
-                "title": "Embedded Cortex-Debug",
+                "title": "Embedd Cortex-Debug",
                 "properties": {
                     "cortex-debug.variableUseNaturalFormat": {
                         "type": "boolean",
@@ -3210,16 +3210,16 @@
         "mcu-debug.peripheral-viewer"
     ],
     "main": "./dist/extension.js",
-    "name": "embedded-cortex-debug",
-    "displayName": "Embedded Cortex-Debug",
-    "publisher": "embeddteam",
+    "name": "embedd-cortex-debug",
+    "displayName": "Embedd Cortex-Debug",
+    "publisher": "embedd-team",
     "license": "MIT",
     "repository": {
         "type": "git",
-        "url": "https://github.com/avlaak/cortex-debug.git"
+        "url": "https://github.com/avlaak/embedd-cortex-debug.git"
     },
     "bugs": {
-        "url": "https://github.com/avlaak/cortex-debug/issues"
+        "url": "https://github.com/avlaak/embedd-cortex-debug/issues"
     },
     "scripts": {
         "vscode:prepublish": "npm run lint && webpack --mode production && node dist/docgen.js && npm ci -C binary_modules --omit dev && node -e \"require('fs').cpSync('binary_modules/node_modules', 'dist/node_modules', {recursive: true, verbatimSymlinks: true})\"",

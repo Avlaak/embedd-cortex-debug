@@ -3,6 +3,9 @@
 ### Added
 * Added "Remove All Expressions" and "Collapse All" buttons to Live Watch panel, similar to the standard Watch view.
 
+### Changed
+* Update package name to embedd and adjust publisher.
+
 ## [1.14.1] – 2025‑12‑15
 
 ### Fixed

@@ -256,7 +256,7 @@ export class CortexDebugConfigurationProvider implements vscode.DebugConfigurati
         }
         this.validateLoadAndSymbolFiles(config, cwd);
 
-        const extension = vscode.extensions.getExtension('embeddteam.embedded-cortex-debug');
+        const extension = vscode.extensions.getExtension('embedd-team.embedd-cortex-debug');
         config.pvtVersion = extension?.packageJSON?.version || '<unknown version>';
 
         if (config.liveWatch?.enabled) {
