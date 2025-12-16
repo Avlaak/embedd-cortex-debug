@@ -429,6 +429,7 @@ export class LiveWatchWebviewProvider implements vscode.WebviewViewProvider {
         this.variables = new LiveVariableNode(undefined, '', '');
         this.setRefreshRate();
         this.restoreState();
+        this.updateHasExpressionsContext();
         context.subscriptions.push(
             vscode.workspace.onDidChangeConfiguration(this.settingsChanged.bind(this))
         );
@@ -694,6 +695,12 @@ export class LiveWatchWebviewProvider implements vscode.WebviewViewProvider {
         const data = this.variables.serialize();
         state.update(VERSION_ID, LiveWatchWebviewProvider.stateVersion);
         state.update(WATCH_LIST_STATE, data);
+        this.updateHasExpressionsContext();
+    }
+
+    private updateHasExpressionsContext() {
+        const hasExpressions = this.variables.getChildren().length > 0;
+        vscode.commands.executeCommand('setContext', 'cortex-debug.liveWatch.hasExpressions', hasExpressions);
     }
 
     private isSameSession(session: vscode.DebugSession): boolean {

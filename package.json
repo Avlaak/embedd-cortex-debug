@@ -484,12 +484,14 @@
             {
                 "command": "cortex-debug.liveWatch.removeAllExpr",
                 "title": "Remove All Expressions",
-                "icon": "$(close-all)"
+                "icon": "$(close-all)",
+                "enablement": "cortex-debug.liveWatch.hasExpressions"
             },
             {
                 "command": "cortex-debug.liveWatch.collapseAll",
                 "title": "Collapse All",
-                "icon": "$(collapse-all)"
+                "icon": "$(collapse-all)",
+                "enablement": "cortex-debug.liveWatch.hasExpressions"
             }
         ],
         "keybindings": [
@@ -3090,17 +3092,27 @@
                 {
                     "command": "cortex-debug.liveWatch.addExpr",
                     "when": "view == cortex-debug.liveWatch",
-                    "group": "navigation"
+                    "group": "navigation@1"
+                },
+                {
+                    "command": "cortex-debug.varHexModeTurnOn",
+                    "when": "view == cortex-debug.liveWatch && inDebugMode && debugType == 'cortex-debug' && debugState == stopped &&  cortex-debug:variableUseNaturalFormat",
+                    "group": "navigation@2"
+                },
+                {
+                    "command": "cortex-debug.varHexModeTurnOff",
+                    "when": "view == cortex-debug.liveWatch && inDebugMode && debugType == 'cortex-debug' && debugState == stopped && !cortex-debug:variableUseNaturalFormat",
+                    "group": "navigation@2"
                 },
                 {
                     "command": "cortex-debug.liveWatch.removeAllExpr",
                     "when": "view == cortex-debug.liveWatch",
-                    "group": "navigation"
+                    "group": "navigation@3"
                 },
                 {
                     "command": "cortex-debug.liveWatch.collapseAll",
                     "when": "view == cortex-debug.liveWatch",
-                    "group": "navigation"
+                    "group": "navigation@4"
                 },
                 {
                     "command": "cortex-debug.varHexModeTurnOn",
@@ -3120,16 +3132,6 @@
                 {
                     "command": "cortex-debug.varHexModeTurnOff",
                     "when": "view == workbench.debug.watchExpressionsView && inDebugMode && debugType == 'cortex-debug' && debugState == stopped && !cortex-debug:variableUseNaturalFormat",
-                    "group": "navigation"
-                },
-                {
-                    "command": "cortex-debug.varHexModeTurnOn",
-                    "when": "view == cortex-debug.liveWatch && inDebugMode && debugType == 'cortex-debug' && debugState == stopped &&  cortex-debug:variableUseNaturalFormat",
-                    "group": "navigation"
-                },
-                {
-                    "command": "cortex-debug.varHexModeTurnOff",
-                    "when": "view == cortex-debug.liveWatch && inDebugMode && debugType == 'cortex-debug' && debugState == stopped && !cortex-debug:variableUseNaturalFormat",
                     "group": "navigation"
                 }
             ],

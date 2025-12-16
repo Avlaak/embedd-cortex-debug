@@ -1,5 +1,8 @@
 # Changelog
 
+### Changed
+* Align Live Watch toolbar buttons with standard Watch view.
+
 ## [1.14.2] – 2025‑12‑16
 
 ### Added
