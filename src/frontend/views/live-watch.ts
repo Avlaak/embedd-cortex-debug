@@ -822,6 +822,32 @@ export class LiveWatchWebviewProvider implements vscode.WebviewViewProvider {
         }
     }
 
+    public removeAllExpr() {
+        const children = this.variables.getChildren();
+        if (children.length > 0) {
+            for (const child of [...children]) {
+                this.variables.removeChild(child);
+            }
+            this.saveState();
+            this.updateWebview();
+        }
+    }
+
+    public collapseAll() {
+        const children = this.variables.getChildren();
+        let changed = false;
+        for (const child of children) {
+            if (child.expanded) {
+                child.expanded = false;
+                changed = true;
+            }
+        }
+        if (changed) {
+            this.saveState();
+            this.updateWebview();
+        }
+    }
+
     public editNode(node: LiveVariableNode) {
         if (!node.isRootChild()) {
             return;

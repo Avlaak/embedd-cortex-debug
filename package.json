@@ -480,6 +480,16 @@
                 "command": "cortex-debug.liveWatch.addExpr",
                 "title": "Add expression to Live Watch window",
                 "icon": "$(plus)"
+            },
+            {
+                "command": "cortex-debug.liveWatch.removeAllExpr",
+                "title": "Remove All Expressions",
+                "icon": "$(close-all)"
+            },
+            {
+                "command": "cortex-debug.liveWatch.collapseAll",
+                "title": "Collapse All",
+                "icon": "$(collapse-all)"
             }
         ],
         "keybindings": [
@@ -3079,6 +3089,16 @@
             "view/title": [
                 {
                     "command": "cortex-debug.liveWatch.addExpr",
+                    "when": "view == cortex-debug.liveWatch",
+                    "group": "navigation"
+                },
+                {
+                    "command": "cortex-debug.liveWatch.removeAllExpr",
+                    "when": "view == cortex-debug.liveWatch",
+                    "group": "navigation"
+                },
+                {
+                    "command": "cortex-debug.liveWatch.collapseAll",
                     "when": "view == cortex-debug.liveWatch",
                     "group": "navigation"
                 },

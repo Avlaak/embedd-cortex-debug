@@ -88,6 +88,8 @@ export class CortexDebugExtension {
             vscode.commands.registerCommand('cortex-debug.liveWatch.addToLiveWatch', this.addToLiveWatch.bind(this)),
             vscode.commands.registerCommand('cortex-debug.liveWatch.moveUp', this.moveUpLiveWatchExpr.bind(this)),
             vscode.commands.registerCommand('cortex-debug.liveWatch.moveDown', this.moveDownLiveWatchExpr.bind(this)),
+            vscode.commands.registerCommand('cortex-debug.liveWatch.removeAllExpr', this.removeAllLiveWatchExpr.bind(this)),
+            vscode.commands.registerCommand('cortex-debug.liveWatch.collapseAll', this.collapseAllLiveWatch.bind(this)),
 
             vscode.workspace.onDidChangeConfiguration(this.settingsChanged.bind(this)),
             vscode.debug.onDidReceiveDebugSessionCustomEvent(this.receivedCustomEvent.bind(this)),
@@ -901,6 +903,14 @@ export class CortexDebugExtension {
 
     private moveDownLiveWatchExpr(node: any) {
         this.liveWatchProvider.moveDownNode(node);
+    }
+
+    private removeAllLiveWatchExpr() {
+        this.liveWatchProvider.removeAllExpr();
+    }
+
+    private collapseAllLiveWatch() {
+        this.liveWatchProvider.collapseAll();
     }
 }
 
