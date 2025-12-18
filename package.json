@@ -3218,10 +3218,10 @@
     "license": "MIT",
     "repository": {
         "type": "git",
-        "url": "https://github.com/avlaak/embedd-cortex-debug.git"
+        "url": "https://github.com/Avlaak/embedd-cortex-debug.git"
     },
     "bugs": {
-        "url": "https://github.com/avlaak/embedd-cortex-debug/issues"
+        "url": "https://github.com/Avlaak/embedd-cortex-debug/issues"
     },
     "scripts": {
         "vscode:prepublish": "npm run lint && webpack --mode production && node dist/docgen.js && npm ci -C binary_modules --omit dev && node -e \"require('fs').cpSync('binary_modules/node_modules', 'dist/node_modules', {recursive: true, verbatimSymlinks: true})\"",
