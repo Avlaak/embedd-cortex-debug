@@ -1,10 +1,35 @@
 # Embedd Cortex-Debug
+[![VS Code](https://img.shields.io/badge/VS%20Code-Extension-blue?logo=visualstudiocode)](#)
 
 ![Visual Studio Code with Cortex-Debug Installed](./images/vs-code-screenshot.png)
 
-## ❓ About This Extension
+## 🔀 Fork Manifest
 
-This extension is part of the **[Embedd Project Manager](https://github.com/embeddteam/EmbeddedProjectManager.git)** – a comprehensive toolkit for embedded systems development in VS Code.
+This extension is a fork of the [cortex-debug](https://github.com/Marus/cortex-debug).
+
+It is developed and maintained as a component of [Embedd Project Manager](https://github.com/embeddteam/EmbeddedProjectManager.git) — a unified toolkit for embedded systems development in VS Code.
+
+### Development Philosophy
+
+While this fork evolves to meet the needs of Embedd Project Manager users, **it is not intended to diverge from upstream projects**.
+
+All improvements, fixes, and enhancements introduced here are:
+- Implemented with **upstream compatibility in mind**
+- Submitted back to the original projects via **pull requests**
+- Kept in sync through a **fast update and rebase cycle**
+
+### Fast Iteration, Real Users
+
+The primary goal of this fork is to enable:
+- **Rapid iteration**
+- **Early shipping**
+- **Validation on real users**
+
+This allows us to provide a **better and faster experience** for Embedd Project Manager users, while ensuring that the upstream ecosystem benefits from every improvement made here.
+
+---
+
+## ℹ️ About This Extension
 
 Debugging support for ARM Cortex-M (and others) Microcontrollers with the following features:
 
