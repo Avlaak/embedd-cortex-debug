@@ -7,7 +7,7 @@
 import {
     Logger, logger, LoggingDebugSession, InitializedEvent, TerminatedEvent,
     ContinuedEvent, OutputEvent, Thread, ThreadEvent,
-    StackFrame, Scope, Source, Handles, Event, ErrorDestination
+    StackFrame, Scope, Source, Handles, Event, ErrorDestination, MemoryEvent
 } from '@vscode/debugadapter';
 import { DebugProtocol } from '@vscode/debugprotocol';
 import { MI2, parseReadMemResults } from './backend/mi2/mi2';
@@ -1332,12 +1332,62 @@ export class GDBDebugSession extends LoggingDebugSession {
                 this.sendResponse(response);
                 break;
             case 'read-registers':
-                if (isBusy || this.sendDummyStackTrace) { return retFunc(); }
-                this.args.registerUseNaturalFormat = (args && args.hex) ? false : true;
-                this.readRegistersRequest(response);
+                if (isBusy || this.sendDummyStackTrace) {
+                    // Try to use live GDB if available (works while target is running)
+                    if (this.miLiveGdb?.miDebugger) {
+                        const hex = args && args.hex;
+                        const fmt = hex ? 'x' : 'N';
+                        this.miLiveGdb.miDebugger.sendCommand(`data-list-register-values ${fmt}`).then((node) => {
+                            if (node.resultRecords.resultClass === 'done') {
+                                const rv = node.resultRecords.results[0][1];
+                                response.body = rv.map((n) => {
+                                    const val = {};
+                                    n.forEach((x) => {
+                                        val[x[0]] = x[1];
+                                    });
+                                    return val;
+                                });
+                            } else {
+                                response.body = {
+                                    error: 'Unable to parse response'
+                                };
+                            }
+                            this.sendResponse(response);
+                        }, (error) => {
+                            response.body = { error: error };
+                            this.sendErrorResponse(response, 115, `Unable to read registers: ${error.toString()}`);
+                        });
+                    } else {
+                        return retFunc();
+                    }
+                } else {
+                    this.args.registerUseNaturalFormat = (args && args.hex) ? false : true;
+                    this.readRegistersRequest(response);
+                }
                 break;
             case 'read-register-list':
-                this.readRegisterListRequest(response);
+                if (isBusy && this.miLiveGdb?.miDebugger) {
+                    // Use live GDB for register list when target is running
+                    this.miLiveGdb.miDebugger.sendCommand('data-list-register-names').then((node) => {
+                        if (node.resultRecords.resultClass === 'done') {
+                            let registerNames;
+                            node.resultRecords.results.forEach((rr) => {
+                                if (rr[0] === 'register-names') {
+                                    registerNames = rr[1];
+                                }
+                            });
+                            response.body = registerNames;
+                        } else {
+                            response.body = { error: node.resultRecords.results };
+                        }
+                        this.sendResponse(response);
+                    }, (error) => {
+                        response.body = { error: error };
+                        this.sendErrorResponse(response, 116, `Unable to read register list: ${error.toString()}`);
+                    });
+                } else {
+                    this.readRegisterListRequest(response);
+                }
                 break;
             case 'disassemble':
                 this.disassember.customDisassembleRequest(response, args);
@@ -1424,10 +1474,6 @@ export class GDBDebugSession extends LoggingDebugSession {
     }
 
     protected readMemoryRequest(response: DebugProtocol.ReadMemoryResponse, args: DebugProtocol.ReadMemoryArguments, request?: DebugProtocol.Request): void {
-        if (this.isBusy()) {
-            this.busyError(response, args);
-            return;
-        }
         const startAddress = parseInt(args.memoryReference);
         const length = args.count;
         const useAddr = hexFormat(startAddress + (args.offset || 0));
@@ -1439,9 +1485,25 @@ export class GDBDebugSession extends LoggingDebugSession {
             this.sendResponse(response);
             return;
         }
-        // const offset = args.offset ? `-o ${args.offset}` : '';
+
+        // Choose which GDB instance to use: prefer liveGdb when busy, otherwise use main debugger
+        const isBusy = this.isBusy();
+        const hasLiveGdb = !!(this.miLiveGdb?.miDebugger);
+        const useLiveGdb = isBusy && hasLiveGdb;
+
+        // Debug logging
+        if (this.args.showDevDebugOutput) {
+            this.handleMsg('log', `readMemoryRequest: addr=${useAddr}, len=${length}, isBusy=${isBusy}, hasLiveGdb=${hasLiveGdb}, useLiveGdb=${useLiveGdb}\n`);
+        }
+
+        if (isBusy && !hasLiveGdb) {
+            this.busyError(response, args);
+            return;
+        }
+
+        const debugger_ = useLiveGdb ? this.miLiveGdb.miDebugger : this.miDebugger;
         const command = `data-read-memory-bytes "${useAddr}" ${length}`;
-        this.miDebugger.sendCommand(command).then((node) => {
+        debugger_.sendCommand(command).then((node) => {
             const results = parseReadMemResults(node);
             const numBytes = results.data.length / 2;
             const intAry = new Uint8Array(numBytes);
@@ -1454,7 +1516,14 @@ export class GDBDebugSession extends LoggingDebugSession {
             const buf = Buffer.from(intAry);
             const b64Data = buf.toString('base64');
             response.body.data = b64Data;
+            if (this.args.showDevDebugOutput) {
+                this.handleMsg('log', `readMemoryRequest response: addr=${useAddr}, bytes=${numBytes}, data=${results.data.substring(0, 32)}...\n`);
+            }
             this.sendResponse(response);
+            // Send MemoryEvent to notify clients (like peripheral-viewer) that memory content was read/changed
+            if (useLiveGdb) {
+                this.sendEvent(new MemoryEvent(String(startAddress), 0, numBytes));
+            }
         }, (error) => {
             this.sendErrorResponse(response, 114, `Read memory error: ${error.toString()}`);
             this.sendEvent(new TelemetryEvent('Error', 'Reading Memory', command));

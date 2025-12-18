@@ -1,5 +1,8 @@
 # Changelog
 
+### Added
+- Added updating peripheral register states without pausing debugging.
+
 ### Changed
 - Align Live Watch toolbar buttons with standard Watch view.
 
