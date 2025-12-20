@@ -8,6 +8,7 @@
       "samplesPerSecond": 4
   }
   ```
+- Added live memory write support - peripheral register values can now be modified while the program is running (when `liveWatch` or `livePeripheral` is enabled).
 
 ## [1.14.3] – 2025‑12‑19
 

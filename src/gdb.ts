@@ -1323,7 +1323,7 @@ export class GDBDebugSession extends LoggingDebugSession {
                 this.readMemoryRequestCustom(response, args['address'], args['length']);
                 break;
             case 'write-memory':
-                if (isBusy) { return retFunc(); }
+                // writeMemoryRequestCustom handles busy state internally using liveGdb
                 this.writeMemoryRequestCustom(response, args['address'], args['data']);
                 break;
             case 'set-var-format':
@@ -1531,21 +1531,42 @@ export class GDBDebugSession extends LoggingDebugSession {
     }
 
     protected writeMemoryRequest(response: DebugProtocol.WriteMemoryResponse, args: DebugProtocol.WriteMemoryArguments, request?: DebugProtocol.Request): void {
-        if (this.isBusy()) {
-            this.busyError(response, args);
-            return;
-        }
         const startAddress = parseInt(args.memoryReference);
         const useAddr = hexFormat(startAddress + (args.offset || 0));
         const buf = Buffer.from(args.data, 'base64');
         const data = buf.toString('hex');
 
+        // Choose which GDB instance to use: prefer liveGdb when busy, otherwise use main debugger
+        const isBusy = this.isBusy();
+        const hasLiveGdb = !!(this.miLiveGdb?.miDebugger);
+        const useLiveGdb = isBusy && hasLiveGdb;
+
+        // Debug logging
+        if (this.args.showDevDebugOutput) {
+            this.handleMsg('log', `writeMemoryRequest: addr=${useAddr}, len=${buf.length}, isBusy=${isBusy}, hasLiveGdb=${hasLiveGdb}, useLiveGdb=${useLiveGdb}\n`);
+        }
+
+        if (isBusy && !hasLiveGdb) {
+            this.busyError(response, args);
+            return;
+        }
+
+        const debugger_ = useLiveGdb ? this.miLiveGdb.miDebugger : this.miDebugger;
+        const command = `data-write-memory-bytes ${useAddr} ${data}`;
+
         // Note: We don't do partials
-        this.miDebugger.sendCommand(`data-write-memory-bytes ${useAddr} ${data}`).then((node) => {
+        debugger_.sendCommand(command).then((node) => {
             response.body = {
                 bytesWritten: buf.length
             };
+            if (this.args.showDevDebugOutput) {
+                this.handleMsg('log', `writeMemoryRequest response: addr=${useAddr}, bytesWritten=${buf.length}\n`);
+            }
             this.sendResponse(response);
+            // Send MemoryEvent to notify clients (like peripheral-viewer) that memory was written
+            if (useLiveGdb) {
+                this.sendEvent(new MemoryEvent(String(startAddress), 0, buf.length));
+            }
         }, (error) => {
             (response as DebugProtocol.Response).body = { error: error };
             this.sendErrorResponse(response, 114, `Write memory error: ${error.toString()}`);
@@ -1579,8 +1600,24 @@ export class GDBDebugSession extends LoggingDebugSession {
 
     protected writeMemoryRequestCustom(response: DebugProtocol.Response, startAddress: number, data: string) {
         const address = hexFormat(startAddress, 8);
-        this.miDebugger.sendCommand(`data-write-memory-bytes ${address} ${data}`).then((node) => {
+
+        // Choose which GDB instance to use: prefer liveGdb when busy, otherwise use main debugger
+        const isBusy = this.isBusy();
+        const hasLiveGdb = !!(this.miLiveGdb?.miDebugger);
+        const useLiveGdb = isBusy && hasLiveGdb;
+
+        if (isBusy && !hasLiveGdb) {
+            this.busyError(response, { address: startAddress, data: data });
+            return;
+        }
+
+        const debugger_ = useLiveGdb ? this.miLiveGdb.miDebugger : this.miDebugger;
+        debugger_.sendCommand(`data-write-memory-bytes ${address} ${data}`).then((node) => {
             this.sendResponse(response);
+            // Send MemoryEvent to notify clients that memory was written
+            if (useLiveGdb) {
+                this.sendEvent(new MemoryEvent(String(startAddress), 0, data.length / 2));
+            }
         }, (error) => {
             response.body = { error: error };
             this.sendErrorResponse(response, 114, `Write memory error: ${error.toString()}`);
