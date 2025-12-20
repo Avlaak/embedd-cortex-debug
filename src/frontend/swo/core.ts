@@ -379,7 +379,6 @@ export class SWOCore extends SWORTTCoreBase {
                     this.webview.sendMessage(message);
                 }
             } else {
-                // tslint:disable-next-line:no-console
                 console.log('Received Other Hardware Packet: ', packet);
             }
         }

@@ -147,7 +147,6 @@ export class OpenOCDServerController extends EventEmitter implements GDBServerCo
                 commands.push(`interpreter-exec console "monitor rtt polling_interval ${cfg.polling_interval}"`);
             }
 
-            // tslint:disable-next-line: forin
             for (const channel in this.rttHelper.rttLocalPortMap) {
                 const tcpPort = this.rttHelper.rttLocalPortMap[channel];
                 commands.push(`interpreter-exec console "monitor rtt server start ${tcpPort} ${channel}"`);

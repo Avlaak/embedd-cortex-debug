@@ -13,7 +13,6 @@ interface MemDocStatus {
 }
 
 export class MemoryContentProvider implements vscode.TextDocumentContentProvider {
-    // tslint:disable-next-line:variable-name
     private _onDidChange = new vscode.EventEmitter<vscode.Uri>();
     public readonly onDidChange = this._onDidChange.event;
     private allMemoryWindows: { [path: string]: MemDocStatus } = {};

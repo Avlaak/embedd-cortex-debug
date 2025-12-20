@@ -6,7 +6,6 @@ export class GraphDataSource {
     } = {};
 
     private subscriptions: {
-        // tslint:disable-next-line:ban-types
         [graphId: string]: ((p: GraphPoint) => void)[];
     } = {};
 

@@ -63,7 +63,6 @@ export class ProgramStatsGraph implements Graph {
     private processData(data: { [name: string]: number }) {
         let counts: FunctionStat[] = [];
 
-        // tslint:disable-next-line:forin
         for (const key in data) {
             counts.push({ name: key, count: data[key] });
         }

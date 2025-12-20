@@ -28,7 +28,6 @@ export function isExpandable(value: string): number {
     return 0;
 }
 
-// tslint:disable-next-line:ban-types
 export function expandValue(variableCreate: (value: string | object, opts?: { arg: boolean }) => number, value: string, root: string = '', extra?: any): any {
     const parseCString = () => {
         value = value.trim();

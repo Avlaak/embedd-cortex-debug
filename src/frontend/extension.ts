@@ -565,7 +565,6 @@ export class CortexDebugExtension {
             }, delay);
             if (launch && launch.detached && (count > 0)) {
                 try {
-                    // tslint:disable-next-line: one-variable-per-declaration
                     let res: (value: vscode.DebugSessionCustomEvent) => void;
                     let rej: (reason?: any) => void;
                     const prevStartedPromise = new Promise<vscode.DebugSessionCustomEvent>((resolve, reject) => {
