@@ -875,6 +875,28 @@
                                     "samplesPerSecond": 4
                                 }
                             },
+                            "livePeripheral": {
+                                "description": "An object with parameters for Live Peripheral Register View (auto-refresh while running)",
+                                "properties": {
+                                    "enabled": {
+                                        "default": false,
+                                        "description": "Enable/Disable Live Peripheral Register View. When enabled, peripheral registers will be updated automatically while the program is running.",
+                                        "type": "boolean"
+                                    },
+                                    "samplesPerSecond": {
+                                        "default": 2,
+                                        "description": "Maximum number of samples per second for peripheral register updates",
+                                        "type": "number",
+                                        "multipleOf": 1,
+                                        "minimum": 0,
+                                        "maximum": 10
+                                    }
+                                },
+                                "default": {
+                                    "enabled": true,
+                                    "samplesPerSecond": 4
+                                }
+                            },
                             "chainedConfigurations": {
                                 "description": "An object describing how additional configurations should be launched",
                                 "properties": {
@@ -2054,6 +2076,28 @@
                                         "multipleOf": 1,
                                         "minimum": 0,
                                         "maximum": 20
+                                    }
+                                },
+                                "default": {
+                                    "enabled": true,
+                                    "samplesPerSecond": 4
+                                }
+                            },
+                            "livePeripheral": {
+                                "description": "An object with parameters for Live Peripheral Register View (auto-refresh while running)",
+                                "properties": {
+                                    "enabled": {
+                                        "default": false,
+                                        "description": "Enable/Disable Live Peripheral Register View. When enabled, peripheral registers will be updated automatically while the program is running.",
+                                        "type": "boolean"
+                                    },
+                                    "samplesPerSecond": {
+                                        "default": 2,
+                                        "description": "Maximum number of samples per second for peripheral register updates",
+                                        "type": "number",
+                                        "multipleOf": 1,
+                                        "minimum": 0,
+                                        "maximum": 10
                                     }
                                 },
                                 "default": {

@@ -45,6 +45,9 @@ If the type is marked as `{...}` it means that it is a complex item can have mul
 | interface | string | Both | Debug Interface type to use for connections (defaults to SWD) - Used for J-Link, ST-LINK and BMP probes. |
 | ipAddress | string | Both | IP Address for networked J-Link Adapter |
 | jlinkscript | string | Both | J-Link script file - optional input file for customizing J-Link actions. |
+| livePeripheral | object | Both | An object with parameters for Live Peripheral Register View (auto-refresh while running) |
+| livePeripheral<br>.enabled | boolean | Both | Enable/Disable Live Peripheral Register View. When enabled, peripheral registers will be updated automatically while the program is running. |
+| livePeripheral<br>.samplesPerSecond | number | Both | Maximum number of samples per second for peripheral register updates |
 | liveWatch | object | Both | An object with parameters for Live Watch |
 | liveWatch<br>.enabled | boolean | Both | Enable/Disable Live Watch. Only applies to OpenOCD |
 | liveWatch<br>.samplesPerSecond | number | Both | Maximum number of samples per second. Different from GUI refresh-rate, which is a user/workspace setting |

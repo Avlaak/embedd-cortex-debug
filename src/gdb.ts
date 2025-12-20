@@ -948,7 +948,7 @@ export class GDBDebugSession extends LoggingDebugSession {
                     for (const cmd of swoRttCommands) {
                         await this.miDebugger.sendCommand(cmd);
                     }
-                    if (this.args.liveWatch?.enabled) {
+                    if (this.args.liveWatch?.enabled || this.args.livePeripheral?.enabled) {
                         const liveGdb = new LiveWatchMonitor(this);
                         try {
                             // We must connect while it is paused. If no breakAfterReset and no runToEntryPoint, the program will

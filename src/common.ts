@@ -242,6 +242,11 @@ export interface LiveWatchConfig {
     samplesPerSecond?: number;
 }
 
+export interface LivePeripheralConfig {
+    enabled: boolean;
+    samplesPerSecond?: number;
+}
+
 // Helper function to create a symbolFile object properly with required elements
 export function defSymbolFile(file: string): SymbolFile {
     const ret: SymbolFile = {
@@ -300,6 +305,7 @@ export interface ConfigurationArguments extends DebugProtocol.LaunchRequestArgum
     rttConfig: RTTConfiguration;
     swoConfig: SWOConfiguration;
     liveWatch: LiveWatchConfig;
+    livePeripheral: LivePeripheralConfig;
     graphConfig: any[];
     /// Triple slashes will cause the line to be ignored by the options-doc.py script
     /// We don't expect the following to be in booleann form or have the value of 'none' after

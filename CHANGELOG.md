@@ -1,5 +1,14 @@
 # Changelog
 
+### Added
+- Added `livePeripheral` configuration option for automatic peripheral register updates while program is running. When enabled, peripheral registers will be refreshed automatically at a configurable rate. Can be used independently from `liveWatch`. In your launch.json add an object property called `livePeripheral`:
+  ```json
+  "livePeripheral": {
+      "enabled": true,
+      "samplesPerSecond": 4
+  }
+  ```
+
 ## [1.14.3] – 2025‑12‑19
 
 ### Added
