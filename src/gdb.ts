@@ -1543,7 +1543,8 @@ export class GDBDebugSession extends LoggingDebugSession {
 
         // Debug logging
         if (this.args.showDevDebugOutput) {
-            this.handleMsg('log', `writeMemoryRequest: addr=${useAddr}, len=${buf.length}, isBusy=${isBusy}, hasLiveGdb=${hasLiveGdb}, useLiveGdb=${useLiveGdb}\n`);
+            this.handleMsg('log',
+                `writeMemoryRequest: addr=${useAddr}, len=${buf.length}, isBusy=${isBusy}, hasLiveGdb=${hasLiveGdb}, useLiveGdb=${useLiveGdb}\n`);
         }
 
         if (isBusy && !hasLiveGdb) {
