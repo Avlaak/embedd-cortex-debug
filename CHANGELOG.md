@@ -1,7 +1,9 @@
 # Changelog
 
+## [1.14.4] – 2025‑12‑29
+
 ### Added
-- Added `livePeripheral` configuration option for automatic peripheral register updates while program is running. When enabled, peripheral registers will be refreshed automatically at a configurable rate. Can be used independently from `liveWatch`. In your launch.json add an object property called `livePeripheral`:
+- Added `livePeripheral` configuration option for automatic peripheral register updates while program is running. When enabled, peripheral registers will be refreshed automatically at a configurable rate. Can be used independently from `liveWatch`. Dynamic peripheral register updates work with embedd-peripheral-viewer version 1.7.1 or higher. In your launch.json add an object property called `livePeripheral`:
   ```json
   "livePeripheral": {
       "enabled": true,
