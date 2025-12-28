@@ -107,7 +107,8 @@ jobs:
     name: VS Code Marketplace
     needs: build
     runs-on: ubuntu-latest
-    if: needs.build.outputs.is_prerelease == 'false'
+    # if: needs.build.outputs.is_prerelease == 'false'
+    if: false # Temporarily disable publishing to VS Code Marketplace
     steps:
       - name: Checkout code
         uses: actions/checkout@v3
