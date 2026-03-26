@@ -1,5 +1,8 @@
 # Changelog
 
+### Changed
+- Update logo.
+
 ## [1.14.4] – 2025‑12‑29
 
 ### Added
