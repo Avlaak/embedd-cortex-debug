@@ -2,6 +2,8 @@
 
 ### Changed
 - Update logo.
+- Backed out change where we try "monitor exit". See [Issue #1185](https://github.com/Marus/cortex-debug/issues/1185).
+- Increased server timeout to 10 mins.
 
 ## [1.14.4] – 2025‑12‑29
 
