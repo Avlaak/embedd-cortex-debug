@@ -389,11 +389,6 @@
                 "type": "object",
                 "title": "Miscellaneous",
                 "properties": {
-                    "cortex-debug.enableTelemetry": {
-                        "type": "boolean",
-                        "default": true,
-                        "description": "Enable Telemetry for the Cortex-Debug Extension. Reporting will also respect the global telemetry.enableTelemetry setting."
-                    },
                     "cortex-debug.dbgServerLogfile": {
                         "type": [
                             "string",
@@ -3212,7 +3207,7 @@
     "dependencies": {
         "@vscode/extension-telemetry": "^0.9.8",
         "@vscode/webview-ui-toolkit": "^1.4.0",
-        "binary-parser": "^2.2.1",
+        "binary-parser": "^2.3.0",
         "bindings": "^1.5.0",
         "command-exists": "^1.2.9",
         "commander": "^13.0.0",
@@ -3247,7 +3242,7 @@
         "ts-loader": "^9.5.2",
         "typescript": "^5.7.3",
         "typescript-eslint": "^8.20.0",
-        "webpack": "^5.97.1",
+        "webpack": "^5.105.0",
         "webpack-cli": "^6.0.1"
     },
     "engines": {
