@@ -796,7 +796,7 @@ class LiveWatchView {
 
         this.editingNodeId = node.id;
 
-        const currentValue = node.value;
+        const currentValue = valueSpan.textContent || '';
         const input = document.createElement('input');
         input.type = 'text';
         input.className = 'inline-edit-input';
@@ -834,7 +834,6 @@ class LiveWatchView {
             if (save && newValue !== currentValue) {
                 // Optimistic update: show the new value immediately without
                 // waiting for the async round-trip through the extension host.
-                node.value = newValue;
                 valueSpan.textContent = newValue;
                 this.vscode.postMessage({
                     type: 'inline-set-value',

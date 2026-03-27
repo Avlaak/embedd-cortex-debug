@@ -1,5 +1,8 @@
 # Changelog
 
+### Fixed
+- Fixed Live Watch inline edit populating the input with the previously entered raw value instead of the current display value when re-editing a variable.
+
 ## [1.14.5] - 2026-03-27
 
 ### Fixed
