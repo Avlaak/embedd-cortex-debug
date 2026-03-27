@@ -106,6 +106,23 @@ export function isEditableVariable(expr: string): boolean {
 }
 
 /**
+ * Normalize a user-entered value so it can be accepted by GDB's `set` command
+ * via `interpreter-exec console`. Handles:
+ * - Boolean literals: true/false -> 1/0
+ * - MI-level escaping: backslashes and double quotes are escaped so the value
+ *   survives the MI double-quoted wrapper intact.
+ */
+export function normalizeValueForGdbConsole(value: string): string {
+    const lower = value.toLowerCase();
+    if (lower === 'true') { return '1'; }
+    if (lower === 'false') { return '0'; }
+
+    // Escape backslashes first, then double quotes, so the value is safe inside
+    // the MI `interpreter-exec console "..."` double-quoted string.
+    return value.replace(/\\/g, '\\\\').replace(/"/g, '\\"');
+}
+
+/**
  * Replace content inside square brackets with a placeholder.
  * This allows checking operators outside of array index expressions.
  * Handles nested brackets like arr[matrix[i][j]].

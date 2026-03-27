@@ -6,6 +6,7 @@ import { MIError, VariableObject } from './backend/backend';
 import * as crypto from 'crypto';
 import { MINode } from './backend/mi_parse';
 import { expandValue } from './backend/gdb_expansion';
+import { normalizeValueForGdbConsole } from './common/expression-utils';
 
 export type VariableType = string | VariableObject | ExtendedVariable;
 export interface NameToVarChangeInfo {
@@ -444,7 +445,7 @@ export class LiveWatchMonitor {
     public async setValueRequest(response: DebugProtocol.Response, args: { expression: string; value: string }): Promise<void> {
         try {
             const exp = args.expression;
-            const value = args.value;
+            const value = normalizeValueForGdbConsole(args.value);
             // Use gdb 'set' command via interpreter-exec to assign the value
             await this.miDebugger.sendCommand(`interpreter-exec console "set ${exp}=${value}"`);
             response.success = true;

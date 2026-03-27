@@ -1,5 +1,8 @@
 # Changelog
 
+### Fixed
+- Fixed Live Watch value editing so boolean literals are accepted and string-like values are escaped correctly when writing running variables.
+
 ### Changed
 - Update logo.
 - Backed out change where we try "monitor exit". See [Issue #1185](https://github.com/Marus/cortex-debug/issues/1185).
