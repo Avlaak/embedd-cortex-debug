@@ -1,5 +1,7 @@
 # Changelog
 
+## [1.14.5] - 2026-03-27
+
 ### Fixed
 - Fixed OpenOCD target hanging on disconnect on Windows. The MCU now continues running after stopping the debug session, matching the behavior of other GDB servers and Linux. The fix sends `resume` and `shutdown` commands to OpenOCD via its TCL port before the process is force-killed.
 - Fixed Live Watch value editing so boolean literals are accepted and string-like values are escaped correctly when writing running variables.
