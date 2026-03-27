@@ -1,5 +1,5 @@
 import * as assert from 'assert';
-import { normalizeValueForGdbConsole } from '../../src/common/expression-utils';
+import { normalizeValueForGdbConsole, stripFormatSpecifier } from '../../src/common/expression-utils';
 
 suite('normalizeValueForGdbConsole Tests', () => {
     suite('Boolean literals', () => {
@@ -135,6 +135,80 @@ suite('normalizeValueForGdbConsole Tests', () => {
 
         test('sizeof expression', () => {
             assert.strictEqual(normalizeValueForGdbConsole('sizeof(int)'), 'sizeof(int)');
+        });
+    });
+});
+
+suite('stripFormatSpecifier Tests', () => {
+    suite('Strips known format suffixes', () => {
+        test('hex ,h', () => {
+            assert.strictEqual(stripFormatSpecifier('myVar,h'), 'myVar');
+        });
+
+        test('hex ,x', () => {
+            assert.strictEqual(stripFormatSpecifier('myVar,x'), 'myVar');
+        });
+
+        test('binary ,b', () => {
+            assert.strictEqual(stripFormatSpecifier('counter,b'), 'counter');
+        });
+
+        test('octal ,o', () => {
+            assert.strictEqual(stripFormatSpecifier('flags,o'), 'flags');
+        });
+
+        test('decimal ,d', () => {
+            assert.strictEqual(stripFormatSpecifier('reg,d'), 'reg');
+        });
+
+        test('uppercase ,H', () => {
+            assert.strictEqual(stripFormatSpecifier('val,H'), 'val');
+        });
+    });
+
+    suite('Preserves expressions without format', () => {
+        test('simple variable', () => {
+            assert.strictEqual(stripFormatSpecifier('myVar'), 'myVar');
+        });
+
+        test('struct member', () => {
+            assert.strictEqual(stripFormatSpecifier('obj.field'), 'obj.field');
+        });
+
+        test('arrow member', () => {
+            assert.strictEqual(stripFormatSpecifier('ptr->val'), 'ptr->val');
+        });
+
+        test('array element', () => {
+            assert.strictEqual(stripFormatSpecifier('arr[0]'), 'arr[0]');
+        });
+
+        test('dereference', () => {
+            assert.strictEqual(stripFormatSpecifier('*ptr'), '*ptr');
+        });
+    });
+
+    suite('Does not strip format-like chars in the middle', () => {
+        test('comma in expression is not stripped', () => {
+            assert.strictEqual(stripFormatSpecifier('func(a,b)'), 'func(a,b)');
+        });
+
+        test('comma followed by non-format letter', () => {
+            assert.strictEqual(stripFormatSpecifier('var,z'), 'var,z');
+        });
+    });
+
+    suite('Struct members with format', () => {
+        test('struct member with hex format', () => {
+            assert.strictEqual(stripFormatSpecifier('obj.field,h'), 'obj.field');
+        });
+
+        test('arrow member with binary format', () => {
+            assert.strictEqual(stripFormatSpecifier('ptr->val,b'), 'ptr->val');
+        });
+
+        test('array element with decimal format', () => {
+            assert.strictEqual(stripFormatSpecifier('arr[0],d'), 'arr[0]');
         });
     });
 });

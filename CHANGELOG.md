@@ -2,6 +2,7 @@
 
 ### Fixed
 - Fixed Live Watch value editing so boolean literals are accepted and string-like values are escaped correctly when writing running variables.
+- Fixed Live Watch value editing failing for variables with a display format specifier (e.g. `,h`, `,x`). The format suffix is now stripped before sending the set command to GDB.
 
 ### Changed
 - Update logo.

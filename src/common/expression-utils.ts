@@ -14,7 +14,7 @@
  */
 export function isEditableVariable(expr: string): boolean {
     // Remove format specifier if present (e.g., ",x" or ",h" at the end)
-    const exprWithoutFormat = expr.replace(/,[hxbod]$/i, '').trim();
+    const exprWithoutFormat = stripFormatSpecifier(expr).trim();
 
     if (!exprWithoutFormat) {
         return false;
@@ -103,6 +103,14 @@ export function isEditableVariable(expr: string): boolean {
 
     // If we passed all checks, it's likely a simple variable/lvalue
     return true;
+}
+
+/**
+ * Strip a display format specifier (e.g. ",h", ",x", ",b", ",o", ",d")
+ * from the end of an expression so the raw lvalue can be used in GDB commands.
+ */
+export function stripFormatSpecifier(expr: string): string {
+    return expr.replace(/,[hxbod]$/i, '');
 }
 
 /**
