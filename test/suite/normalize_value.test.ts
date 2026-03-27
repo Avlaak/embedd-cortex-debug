@@ -72,11 +72,11 @@ suite('normalizeValueForGdbConsole Tests', () => {
 
     suite('Character literals (passed through)', () => {
         test('single char', () => {
-            assert.strictEqual(normalizeValueForGdbConsole("'A'"), "'A'");
+            assert.strictEqual(normalizeValueForGdbConsole('\'A\''), '\'A\'');
         });
 
         test('null char', () => {
-            assert.strictEqual(normalizeValueForGdbConsole("'\\0'"), "'\\\\0'");
+            assert.strictEqual(normalizeValueForGdbConsole('\'\\0\''), '\'\\\\0\'');
         });
     });
 
