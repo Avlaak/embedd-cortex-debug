@@ -1816,6 +1816,13 @@ export class GDBDebugSession extends LoggingDebugSession {
                     // should continue
                     this.miDebugger.detach();
                 }
+                // For servers like OpenOCD that don't auto-resume on disconnect (especially on Windows
+                // where process.kill() uses TerminateProcess with no chance for cleanup), request a
+                // graceful shutdown via the server's own control channel (e.g. TCL port for OpenOCD).
+                // This resumes the target and lets the server exit cleanly before the force-kill timeout.
+                if (this.serverController?.gracefulShutdown) {
+                    this.serverController.gracefulShutdown();
+                }
                 resolve();
             };
 

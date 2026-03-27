@@ -413,6 +413,7 @@ export interface GDBServerController extends EventEmitter {
     rttPoll?(): void;
     liveGdbInitCommands?(): string[];
     ctiStopResume?(action: CTIAction): void;
+    gracefulShutdown?(): Promise<void>;
 }
 
 export function genDownloadCommands(config: ConfigurationArguments, preLoadCmds: string[]) {

@@ -474,6 +474,27 @@ export class OpenOCDServerController extends EventEmitter implements GDBServerCo
         }
     }
 
+    public async gracefulShutdown(): Promise<void> {
+        const withTimeout = <T>(promise: Promise<T>, ms: number): Promise<T> =>
+            Promise.race([
+                promise,
+                new Promise<T>((_, reject) => setTimeout(() => reject(new Error('timeout')), ms))
+            ]);
+        try {
+            if (this.tclSocket === null) {
+                this.tclSocket = undefined;
+            }
+            await withTimeout(this.tclCommand('resume'), 200);
+        } catch (e) {
+            // Ignore - force kill will handle it
+        }
+        try {
+            await withTimeout(this.tclCommand('shutdown'), 200);
+        } catch (e) {
+            // Ignore - force kill will handle it
+        }
+    }
+
     public ctiStopResume?(action: CTIAction): void {
         let commands = [];
         if (action === CTIAction.init) {
