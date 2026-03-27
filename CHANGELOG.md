@@ -4,6 +4,7 @@
 - Fixed Live Watch value editing so boolean literals are accepted and string-like values are escaped correctly when writing running variables.
 - Fixed Live Watch value editing failing for variables with a display format specifier (e.g. `,h`, `,x`). The format suffix is now stripped before sending the set command to GDB.
 - Fixed Live Watch variable values not being selectable for copying.
+- Fixed Live Watch inline edit showing stale value on immediate re-edit after setting a variable.
 
 ### Changed
 - Update logo.

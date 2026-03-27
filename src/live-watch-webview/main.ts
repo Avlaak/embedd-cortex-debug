@@ -832,6 +832,10 @@ class LiveWatchView {
 
             // Save if changed
             if (save && newValue !== currentValue) {
+                // Optimistic update: show the new value immediately without
+                // waiting for the async round-trip through the extension host.
+                node.value = newValue;
+                valueSpan.textContent = newValue;
                 this.vscode.postMessage({
                     type: 'inline-set-value',
                     nodeId: node.id,
