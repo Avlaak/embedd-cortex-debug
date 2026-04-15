@@ -96,7 +96,7 @@ export class MI2 extends EventEmitter implements IBackend {
                         reject(new Error('Could not start gdb, no response from gdb'));
                     }, 10);
                     timeout = undefined;
-                }, 5000);
+                }, 10 * 1000);
 
                 const swallOutput = this.debugOutput ? false : true;
                 let v;
@@ -756,14 +756,13 @@ export class MI2 extends EventEmitter implements IBackend {
                     breakpoint.number = bkptNum;
 
                     if (breakpoint.condition) {
-                        this.setBreakPointCondition(bkptNum, breakpoint.condition).then((result) => {
+                        Promise.resolve(this.setBreakPointCondition(bkptNum, breakpoint.condition)).then((result) => {
                             if (result.resultRecords.resultClass === 'done') {
                                 resolve(breakpoint);
                             } else {
                                 reject(new MIError(result.result('msg') || 'Internal error', 'Setting breakpoint condition'));
                             }
-                        },
-                        (reason) => {
+                        }).catch((reason) => {
                             // Just delete the breakpoint we just created as the condition creation failed
                             this.sendCommand(`break-delete ${bkptNum}`).then((x) => { }, (e) => { });
                             reject(reason);     // Use this reason as reason for failing to create the breakpoint
