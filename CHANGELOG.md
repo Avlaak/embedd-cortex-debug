@@ -1,5 +1,7 @@
 # Changelog
 
+## [1.14.7] – 2026‑04‑15
+
 ### Added
 - Add automatically updating extension from GitHub API.
 
