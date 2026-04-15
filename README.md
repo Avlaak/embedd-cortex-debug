@@ -39,11 +39,11 @@ This allows us to provide a **better and faster experience** for Embedd Project 
 Debugging support for ARM Cortex-M (and others) Microcontrollers with the following features:
 
 - While we cannot change the extension name due to VSCode Marketplace rules, this extension can be used by non Cortex-M devices and non ARM devices. People have reported using it with Cortex-R/A, Xtensa, RISC-V and even x86. Your mileage may vary.
-- Highly configurable. See https://github.com/Avlaak/embedd-cortex-debug/blob/master/debug_attributes.md
+- Highly configurable. See <https://github.com/Avlaak/embedd-cortex-debug/blob/master/debug_attributes.md>
 - Support J-Link, OpenOCD GDB Server, STMicroelectronic's ST-LINK GDB server, pyOCD and the Black Magic Probe
 - Partial support textane/stlink (st-util) GDB Servers (SWO can only be captured via a serial port)
-- Multi-core and multi-session debugging. See https://github.com/Avlaak/embedd-cortex-debug/wiki/Multi-core-debugging
-- Disassembly of source code available along with instruction level breakpoints and stepping. The actual disassembly window is provided and managed by VSCode. See https://github.com/Avlaak/embedd-cortex-debug/wiki/Disassembly-Debugging
+- Multi-core and multi-session debugging. See <https://github.com/Avlaak/embedd-cortex-debug/wiki/Multi-core-debugging>
+- Disassembly of source code available along with instruction level breakpoints and stepping. The actual disassembly window is provided and managed by VSCode. See <https://github.com/Avlaak/embedd-cortex-debug/wiki/Disassembly-Debugging>
 - Cortex Core Register Viewer (integrated into Variables window since V1.2)
   - In some cases the st-util GDB server can report incomplete/incorrect registers, so there may be some issues here.
 - SWO Decoding - "console" text output and binary data (signed and unsigned 32-bit integers, Q16.16 fixed point integers, single precision floating point values)
@@ -63,7 +63,7 @@ Debugging support for ARM Cortex-M (and others) Microcontrollers with the follow
 - Live Watch with supported GDB servers (tested with OpenOCD, J-Link, STLink so far - since V1.6)
 - We have a set of extensions that this extension relies on for various frontend services (since V1.6)
   - These services are under the mcu-debug organization and lot of that content was re-factored from this extension to make them work with other debuggers and with browsers
-  - Visit https://marketplace.visualstudio.com/search?term=mcu-debug&target=VSCode&category=All%20categories&sortBy=Relevance\
+  - Visit <https://marketplace.visualstudio.com/search?term=mcu-debug&target=VSCode&category=All%20categories&sortBy=Relevance\>
   - Highlights are a Memory Viewer, RTOS viewer, Peripheral (SVD) Viewer
   ![image](https://user-images.githubusercontent.com/41269583/227667748-599a7ad1-afa8-4fab-92a8-17c3da3b0fdd.png)<br>
   ![image](https://user-images.githubusercontent.com/41269583/227667788-df4bfcea-e4a1-4ea6-86a8-9cf70198817e.png)
@@ -82,26 +82,26 @@ Cortex-Debug uses a [versioning system specified by Microsoft](https://code.visu
 
 Requirements:
 
-- ARM GCC Toolchain (https://developer.arm.com/open-source/gnu-toolchain/gnu-rm/downloads) - provides arm-none-eabi-gdb and related tools
+- ARM GCC Toolchain (<https://developer.arm.com/open-source/gnu-toolchain/gnu-rm/downloads>) - provides arm-none-eabi-gdb and related tools
 - At least one of:
-  - J-Link Software Tools - provides the J-Link GDB Server for J-Link based debuggers (https://www.segger.com/downloads/jlink)
-  - OpenOCD - provides a GDB Server that can be used with a number of debuggers (http://openocd.org)
+  - J-Link Software Tools - provides the J-Link GDB Server for J-Link based debuggers (<https://www.segger.com/downloads/jlink>)
+  - OpenOCD - provides a GDB Server that can be used with a number of debuggers (<http://openocd.org>)
     - NOTE: If a chip vendor ships it's own OpenOCD version, for sure use NOTHING but that
     - NOTE: On macOS do not use the default version of OpenOCD provided by homebrew, this is not compatible with releases V0.2.4 and newer.
-      - You can either install from source using homebrew (`brew install open-ocd --HEAD`) or the packages from https://github.com/xpack-dev-tools/openocd-xpack/releases/ will also work.
+      - You can either install from source using homebrew (`brew install open-ocd --HEAD`) or the packages from <https://github.com/xpack-dev-tools/openocd-xpack/releases/> will also work.
     - NOTE: Some linux versions and Windows may also need a more up-to-date version of OpenOCD from the xPack releases.
-  - Texane's st-util GDB server - Only supports ST-Link Debug Probes (https://github.com/texane/stlink)
+  - Texane's st-util GDB server - Only supports ST-Link Debug Probes (<https://github.com/texane/stlink>)
   - ST-LINK GDB server - This server is packaged with the [STM32CubeIDE](https://www.st.com/en/development-tools/stm32cubeide.html) which must be installed. The location of the STM32CubeIDE and related tools is automatically resolved but also can be overridden using configuration settings (`armToolchainPath`, `stm32cubeprogrammer` and `serverpath`).
-  - pyOCD GDB Server - GDB server that supports the CMSIS-DAP debugger on a number of mbed boards (https://github.com/mbedmicro/pyOCD)
+  - pyOCD GDB Server - GDB server that supports the CMSIS-DAP debugger on a number of mbed boards (<https://github.com/mbedmicro/pyOCD>)
   - Black Magic Probe
 
 ## Usage
 
-See https://github.com/Avlaak/embedd-cortex-debug/wiki for usage information. This needs some help from the community. See https://github.com/Avlaak/embedd-cortex-debug/blob/master/debug_attributes.md for a summary of all properties that are available in your `launch.json`
+See <https://github.com/Avlaak/embedd-cortex-debug/wiki> for usage information. This needs some help from the community. See <https://github.com/Avlaak/embedd-cortex-debug/blob/master/debug_attributes.md> for a summary of all properties that are available in your `launch.json`
 
 ## How to Build from sources
 
-Make sure you have git, NodeJS and typescript installed on your PC before you begin. See: https://code.visualstudio.com/docs/setup/additional-components
+Make sure you have git, NodeJS and typescript installed on your PC before you begin. See: <https://code.visualstudio.com/docs/setup/additional-components>
 
 - `git clone https://github.com/Avlaak/embedd-cortex-debug.git`
 - `cd cortex-debug`
@@ -127,5 +127,5 @@ Now, launch a debug session and you wil be able to use the primary VSCode window
 
 ## Acknowledgments
 
-Parts of this extension are based upon Jan Jurzitza's (WebFreak) code-debug extension (https://github.com/WebFreak001/code-debug).<br>
+Parts of this extension are based upon Jan Jurzitza's (WebFreak) code-debug extension (<https://github.com/WebFreak001/code-debug>).<br>
 His project provided an excellent base for GDB MI parsing and interaction.
