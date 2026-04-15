@@ -26,6 +26,12 @@
                         "multipleOf": 1,
                         "minimum": 100,
                         "maximum": 5000
+                    },
+                    "cortex-debug.autoCheckUpdates": {
+                        "type": "boolean",
+                        "default": true,
+                        "description": "Automatically check for extension updates on startup",
+                        "scope": "application"
                     }
                 }
             },
@@ -493,6 +499,12 @@
                 "title": "Refresh",
                 "icon": "$(refresh)",
                 "enablement": "cortex-debug.liveWatch.hasExpressions"
+            },
+            {
+                "category": "Cortex-Debug",
+                "command": "cortex-debug.checkUpdates",
+                "title": "Check for updates",
+                "icon": "$(cloud-download)"
             }
         ],
         "keybindings": [

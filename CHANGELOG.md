@@ -1,5 +1,8 @@
 # Changelog
 
+### Added
+- Add automatically updating extension from GitHub API.
+
 ## [1.14.6] - 2026-03-27
 
 ### Fixed

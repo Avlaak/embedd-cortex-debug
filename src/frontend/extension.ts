@@ -2,6 +2,7 @@ import * as vscode from 'vscode';
 import * as fs from 'fs';
 import * as path from 'path';
 
+import { checkForUpdates, scheduleAutoUpdateCheck } from '../updater';
 import { CortexDebugChannel } from '../dbgmsgs';
 import { LiveWatchWebviewProvider, LiveVariableNode } from './views/live-watch';
 
@@ -920,6 +921,13 @@ export function activate(context: vscode.ExtensionContext) {
         CortexDebugChannel.createDebugChanne();
         CortexDebugChannel.debugMessage('Starting Cortex-Debug extension.');
     } catch (_e) { /* empty */ }
+
+    const checkUpdatesCmd = vscode.commands.registerCommand(
+        'cortex-debug.checkUpdates',
+        () => checkForUpdates(false)
+    );
+    context.subscriptions.push(checkUpdatesCmd);
+    scheduleAutoUpdateCheck(context);
 
     return new CortexDebugExtension(context);
 }
