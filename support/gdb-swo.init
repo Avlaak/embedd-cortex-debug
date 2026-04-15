@@ -1,6 +1,6 @@
 # To get SWO working, can do it in you C files or let the debugger do it for you by calling the function
 # defined below. For a C implementation see swo-init.c file in this directory or see
-#     https://github.com/Marus/cortex-debug/tree/master/support
+#     https://github.com/Avlaak/embedd-cortex-debug/tree/master/support
 #
 # What is defined below still has limitations because it is generic and does not have any device specific
 # details as we have no way of knowing those details

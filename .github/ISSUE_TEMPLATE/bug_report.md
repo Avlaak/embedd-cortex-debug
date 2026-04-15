@@ -6,18 +6,18 @@ labels: ''
 assignees: ''
 
 ---
-### Please make you search through our existing [issues](https://github.com/Marus/cortex-debug/issues?q=type:issue) (both open and closed)
+### Please make you search through our existing [issues](https://github.com/Avlaak/embedd-cortex-debug/issues?q=type:issue) (both open and closed)
 It may help to look at these instructions in `Preview` mode. Please visit the correct repo to file an issue. If this is an issue with
-* Peripherals/SVD Viewer: [https://github.com/mcu-debug/peripheral-viewer](https://github.com/mcu-debug/peripheral-viewer)
+* Embedd Peripheral Viewer: [https://github.com/Avlaak/embedd-peripheral-viewer](https://github.com/Avlaak/embedd-peripheral-viewer)
 * Memory Viewer: [https://github.com/mcu-debug/memview](https://github.com/mcu-debug/memview)
 * RTOS Viewer: [https://github.com/mcu-debug/rtos-views](https://github.com/mcu-debug/rtos-views)
 * the debugger itself, continue below
 
-Please read our documentation as well. You have a lot of control over how Cortex-Debug works. Besides the top level [README.md](https://github.com/Marus/cortex-debug/blob/master/README.md), we have the following
+Please read our documentation as well. You have a lot of control over how Cortex-Debug works. Besides the top level [README.md](https://github.com/Avlaak/embedd-cortex-debug/blob/master/README.md), we have the following
 
-https://github.com/Marus/cortex-debug/wiki
-https://github.com/Marus/cortex-debug/wiki/Cortex-Debug-Under-the-hood
-https://github.com/Marus/cortex-debug/blob/master/debug_attributes.md
+https://github.com/Avlaak/embedd-cortex-debug/wiki
+https://github.com/Avlaak/embedd-cortex-debug/wiki/Cortex-Debug-Under-the-hood
+https://github.com/Avlaak/embedd-cortex-debug/blob/master/debug_attributes.md
 
 *Finally, make sure all your external tools are configured properly and working. We print all the commands in the Debug Console. Most of the bug reports are from Linux users with improperly installed GNU tools. If you can't run those tools, neither can we.*
 

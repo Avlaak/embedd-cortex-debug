@@ -8,7 +8,7 @@
 
 ## 🔀 Fork Manifest
 
-This extension is a fork of the [cortex-debug](https://github.com/Marus/cortex-debug).
+This extension is a fork of the [cortex-debug](https://github.com/Avlaak/embedd-cortex-debug).
 
 It is developed and maintained as a component of [Embedd Project Manager](https://github.com/embeddteam/EmbeddedProjectManager.git) — a unified toolkit for embedded systems development in VS Code.
 
@@ -39,11 +39,11 @@ This allows us to provide a **better and faster experience** for Embedd Project 
 Debugging support for ARM Cortex-M (and others) Microcontrollers with the following features:
 
 - While we cannot change the extension name due to VSCode Marketplace rules, this extension can be used by non Cortex-M devices and non ARM devices. People have reported using it with Cortex-R/A, Xtensa, RISC-V and even x86. Your mileage may vary.
-- Highly configurable. See https://github.com/Marus/cortex-debug/blob/master/debug_attributes.md
+- Highly configurable. See https://github.com/Avlaak/embedd-cortex-debug/blob/master/debug_attributes.md
 - Support J-Link, OpenOCD GDB Server, STMicroelectronic's ST-LINK GDB server, pyOCD and the Black Magic Probe
 - Partial support textane/stlink (st-util) GDB Servers (SWO can only be captured via a serial port)
-- Multi-core and multi-session debugging. See https://github.com/Marus/cortex-debug/wiki/Multi-core-debugging
-- Disassembly of source code available along with instruction level breakpoints and stepping. The actual disassembly window is provided and managed by VSCode. See https://github.com/Marus/cortex-debug/wiki/Disassembly-Debugging
+- Multi-core and multi-session debugging. See https://github.com/Avlaak/embedd-cortex-debug/wiki/Multi-core-debugging
+- Disassembly of source code available along with instruction level breakpoints and stepping. The actual disassembly window is provided and managed by VSCode. See https://github.com/Avlaak/embedd-cortex-debug/wiki/Disassembly-Debugging
 - Cortex Core Register Viewer (integrated into Variables window since V1.2)
   - In some cases the st-util GDB server can report incomplete/incorrect registers, so there may be some issues here.
 - SWO Decoding - "console" text output and binary data (signed and unsigned 32-bit integers, Q16.16 fixed point integers, single precision floating point values)
@@ -76,7 +76,7 @@ Cortex-Debug uses a [versioning system specified by Microsoft](https://code.visu
 ### Planned Features
 
 - Additional Graphing Options
-- [Our TODO file](https://github.com/Marus/cortex-debug/blob/master/TODO.md)
+- [Our TODO file](https://github.com/Avlaak/embedd-cortex-debug/blob/master/TODO.md)
 
 ## Installation
 
@@ -97,13 +97,13 @@ Requirements:
 
 ## Usage
 
-See https://github.com/Marus/cortex-debug/wiki for usage information. This needs some help from the community. See https://github.com/Marus/cortex-debug/blob/master/debug_attributes.md for a summary of all properties that are available in your `launch.json`
+See https://github.com/Avlaak/embedd-cortex-debug/wiki for usage information. This needs some help from the community. See https://github.com/Avlaak/embedd-cortex-debug/blob/master/debug_attributes.md for a summary of all properties that are available in your `launch.json`
 
 ## How to Build from sources
 
 Make sure you have git, NodeJS and typescript installed on your PC before you begin. See: https://code.visualstudio.com/docs/setup/additional-components
 
-- `git clone https://github.com/Marus/cortex-debug.git`
+- `git clone https://github.com/Avlaak/embedd-cortex-debug.git`
 - `cd cortex-debug`
 - Optionally switch to a branch: `git checkout <existing-branch-name>`
 - `npm install`
