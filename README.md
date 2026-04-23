@@ -9,7 +9,7 @@
 
 ## 🔀 Fork Manifest
 
-This extension is a fork of the [cortex-debug](https://github.com/Avlaak/embedd-cortex-debug).
+This extension is a fork of the [cortex-debug](https://github.com/Marus/cortex-debug).
 
 It is developed and maintained as a component of [Embedd Project Manager](https://github.com/embeddteam/EmbeddedProjectManager.git) — a unified toolkit for embedded systems development in VS Code.
 
