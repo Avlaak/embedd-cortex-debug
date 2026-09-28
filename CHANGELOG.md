@@ -1,5 +1,13 @@
 # Changelog
 
+## [1.14.9] - 2026-09-29
+
+### Fixed
+- Preserve GDB/MI result tokens split across stdout chunks, preventing lost command responses and stalled debugging sessions. Thanks to Daniel Müller for the upstream fix ([Marus/cortex-debug#1261](https://github.com/Marus/cortex-debug/pull/1261)).
+
+### Changed
+- Merge upstream `Marus/cortex-debug` through `a231436`, including GDB startup timeout feedback, debugger shutdown fixes, and dependency updates.
+
 ## [1.14.8] - 2026-06-18
 
 ### Added
@@ -79,9 +87,14 @@
 
 # Before Fork History
 
+# V1.13.0-pre10
+* BugFix[#1215] liveGDB always disconnects without casuing any execution change in the target (like detach does, implicit or explicit)
+
 # V1.13.0-pre9
 * Backed out change where we try "monitor exit". See [Issue #1185](https://github.com/Marus/cortex-debug/issues/1185)
 * Increased server temout to 10 mins
+* PR [#1232] Increased gdb timeout to 60 seconds with feedback that we are still waiting
+* BugFix[#1215] Proper detach for the liveGDB session (no disconnect)
 * Fix for https://github.com/Marus/cortex-debug/issues/1167 Race comdition in parallel reading of multiple symbol files
 
 # V1.13.0-pre8

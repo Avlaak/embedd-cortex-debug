@@ -1,5 +1,5 @@
 {
-    "version": "1.14.8",
+    "version": "1.14.9",
     "preview": false,
     "activationEvents": [
         "onDebugResolve:cortex-debug",
@@ -3233,11 +3233,11 @@
         "ringbufferjs": "^2.0.0",
         "safe-buffer": "^5.2.1",
         "serialport": "^13.0.0",
-        "stream-json": "^1.9.1",
-        "tmp": "^0.2.6",
-        "universal-analytics": "^0.5.3",
+        "stream-json": "^3.5.0",
+        "tmp": "^0.2.7",
+        "universal-analytics": "^0.5.4",
         "usb": "^2.14.0",
-        "uuid": "^14.0.0",
+        "uuid": "^14.0.1",
         "vscode-jsonrpc": "^8.2.1"
     },
     "description": "ARM Cortex-M GDB Debugger support for VSCode - Fork of marus25/cortex-debug with additional features...",

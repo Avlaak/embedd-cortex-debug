@@ -54,7 +54,7 @@ export class VariablesHandler {
                 const v = this.variableHandles.get(vId) as any;
                 v.applyChanges(change);
             }
-        }).finally (() => {
+        }).finally(() => {
             resolve();
         });
     }
@@ -474,7 +474,7 @@ export class LiveWatchMonitor {
         try {
             if (!this.quitting) {
                 this.quitting = true;
-                this.miDebugger.detach();
+                this.miDebugger.stop(true);
             }
         } catch (e) {
             console.error('LiveWatchMonitor.quit', e);
